@@ -1,0 +1,435 @@
+/***Materialize styles overwrite --start***/
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+	background-color: rgba(0, 178, 238, 0.14);
+}
+
+#tracker-component .col .row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+#tracker-component .switch label .lever {
+	margin: 0 5px;
+}
+
+.tabs-content {
+	height: calc(100vh - 143px) !important;
+}
+/***Materialize styles overwrite --ends***/
+
+/***Overwrite Mobilise preset styles --start***/
+*, *:before, *:after {
+	word-break: break-word !important;
+}
+
+#tracker-component .title-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-top: 0;
+	padding: 0;
+	line-height: initial;
+	position: initial;
+}
+
+#tracker-component {
+	padding: 0;
+	background: white;
+}
+
+.tabs{
+	background-color: white;
+}
+
+#tracker-wrap .material-icons.tooltipped {
+	color: #4CAF50 !important;
+}
+
+#tracker-wrap .tooltipped {
+	line-height: initial;
+}
+
+#tracker-wrap .switch__container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#tracker-wrap .switch__container .switch {
+	top: -2px;
+	position: relative;
+}
+
+#tracker-wrap .switch__container i {
+	float: initial;
+	margin-left: initial;
+}
+/***Overwrite Mobilise preset styles --end***/
+
+/***Static styles --start***/
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+@keyframes blinker {  
+	50% { opacity: 0; }
+}
+
+.full-view-width {
+	width: 100vw !important;
+}
+
+.hover-grey:hover {
+	color: #666666 !important;
+}
+
+.dummy-line {
+	border-bottom: 1px solid #ccc;
+	margin-top: 35px;
+	width: 50%;
+}
+/***Static styles --end***/
+
+/***Header styles --start***/
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	height: 50px;
+	width: 35vw;
+	min-width: 300px;
+	position: absolute;
+	left: 65vw;
+}
+
+header::after {
+	all: initial;
+}
+
+.menu-container {
+	display: none;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+}
+
+.bar1, .bar2, .bar3 {
+	width: 25px;
+	height: 3px;
+	background-color: #00b2ee;
+	margin: 6px 0;
+	transition: 0.4s;
+}
+
+.menu-change .bar1 {
+	-webkit-transform: rotate(-45deg) translate(-5px, 4px);
+	transform: rotate(-45deg) translate(-5px, 4px);
+}
+
+.menu-change .bar2 {
+	opacity: 0;
+}
+
+.menu-change .bar3 {
+	-webkit-transform: rotate(45deg) translate(-8px, -8px);
+	transform: rotate(45deg) translate(-8px, -8px);
+}
+
+@media only screen and (max-width: 900px) {
+	header {
+		width: 100%;
+		left: 0;
+		right: 0;
+	}
+	.menu-container {
+		display: inline-block !important;
+	}
+}
+/***Header styles --end***/
+
+/***Map styles --start***/
+.tracker-map-wrapper {
+	width: 65vw;
+}
+
+.tracker-map {
+	background-color: rgb(229, 227, 223);
+	height: 100vh;
+}
+
+#map-canvas {
+	height: 100vh;
+}
+
+.gm-style-cc {
+	display: none !important;
+}
+
+a[target=_blank, title="Open this area in Google Maps (opens a new window)"]{
+	display:none !important;
+}
+
+a[href^="http://maps.google.com/maps"] {
+	display: none !important;
+}
+
+a[href^="https://maps.google.com/maps"] {
+	display: none !important;
+}
+
+@media only screen and (max-width: 900px) {
+	.tracker-map-wrapper {
+		width: 100%;
+	}
+
+	.tracker-map {
+		margin-top: 50px;
+	}
+
+	#map-canvas {
+		height: calc(100vh - 50px);
+	}
+}
+/***Map styles --end***/
+
+/***Icon/Button styles --start***/
+.map-edit-icon {
+	position: absolute;
+	font-size: 20px;
+	color: #707070 !important;
+	outline: auto;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#map-delete-btn {
+	right: 30px;
+	font-size: 27px;
+	line-height: 32px;
+}
+/***Icon/Button styles --end***/
+
+/***Tracker Component styles --start***/
+#tracker-wrap {
+	width: 35vw;
+	min-width: 300px;
+	margin-top: 50px;
+}
+
+#tracker-wrap .header {
+	padding-bottom: 5px;
+}
+
+.tracker-map-name {
+	margin-left: 27px;
+}
+
+.tracker-map-title-wrapper {
+	margin-bottom: 0px;
+}
+
+#tracker-noMaps-label {
+	margin: 5px 0;
+	font-style: oblique;
+}
+
+.tracker-btn {
+	border-radius: 5px;
+	padding: 0 20px;
+	width: 100px;
+}
+
+.tracker-btn span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+.tracker-btn span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: -2px;
+	right: -20px;
+	transition: 0.5s;
+	font-size: 30px;
+}
+
+.tracker-btn:hover span {
+	padding-right: 20px;
+}
+
+.tracker-btn:hover span:after {
+	opacity: 1;
+	right: 0;
+}
+
+.loc-blinker {
+	animation: blinker 1s linear infinite;
+	color: #00b2ee;
+}
+
+#add-cp-header {
+	padding-left: 30px;
+}
+
+#tracker-cp-loc{
+	top: 3px;
+	left: 0;
+	width: fit-content;
+}
+
+.tracker-cp-type-wrapper .select-wrapper+label {
+	top: -30px !important;
+}
+
+#tracker-noCheckpoint-label {
+	margin-top: 5px;
+}
+
+.checkpoints-title {
+	border-bottom: 3px solid #00b1ea;
+	font-size: 16px;
+	color: #00b1ea;
+	font-weight: bold;
+	padding-bottom: 3px;
+	display: inline-block;
+}
+
+.checkpoint-box, .personnel-box {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	margin-bottom: 15px;
+}
+
+.personnel-list {
+	margin-top: 15px;
+}
+
+#tracker-checkpoint-list {
+	margin-top: 15px;
+}
+
+.personnel-wrapper {
+	margin-top: 20px;
+}
+
+#tracker-checkpoint-wrapper {
+	margin-top: 20px;
+}
+
+.checkpoint-icon, .personnel-icon {
+	margin-right: 7px;
+}
+
+.checkpoint-tag, .checkpoint-gtag, .personnel-tag {
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	border: 5px solid #ccc;
+}
+
+.checkpoint-name, .personnel-name{
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.checkpoint-coordinates, .personnel-details{
+	font-size: 15px;
+}
+
+.tracker-sign-icon {
+	height: 40px;
+	width: 40px;
+}
+
+.tracker-banner-icon {
+	height: 60px;
+	width: 120px;
+}
+
+.tracker-signs-wrapper, .tracker-banners-wrapper {
+	margin-top: 30px;
+	display: flex;
+	justify-content: start;
+	flex-wrap: wrap;
+}
+
+.tracker-sign, .tracker-banner {
+	margin: 5px;
+	display: flex;
+	align-items: center;
+}
+
+.tracker-sign-icon.active, .tracker-banner-icon.active {
+	border: 2px solid #002bee;
+}
+
+.filter-personnel-title {
+	font-size: 15px;
+}
+
+.roster-start, .roster-stop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 10px;
+}
+
+.roster-schedule-wrapper {
+	font-size: 15px;
+}
+
+.roster-date-wrapper {
+	width: 50%;
+}
+
+.roster-time-wrapper {
+	width: 44%;
+}
+
+.roster-time-container {
+	padding-top: 0 !important;
+}
+
+@media only screen and (min-width: 992px) {
+	.roster-schedule-wrapper {
+		display: flex;
+	}
+	.roster-start {
+		margin-right: 10px;
+	}
+}
+
+.checkpoint-gtag:hover {
+	border-color: #00b2ee;
+}
+
+@media only screen and (max-width: 900px) {
+	#tracker-wrap {
+		display: none;
+	}
+}
+/***Tracker Component styles --end***/
+
+#map-nav-wrapper {
+	position: absolute;
+	background: white;
+	top: 20px;
+	border-radius: 10px;
+	width: 50vw;
+	border: 2px solid #00b2ee;
+	left: 90px;
+}
+
+#tracker-map-location-search {
+	width: 90%;
+	height: 35px;
+}

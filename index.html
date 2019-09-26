@@ -1,0 +1,439 @@
+<!-- Tracker - Mobilise module -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="author" content="Shobhit Agarwal">
+
+	<title>Mobilise - Tracker</title>
+
+	<!-- Favicons-->
+	<link rel="shortcut icon" href="img/favicon/mobilise-32x32.png">
+
+	<!-- Google Icon Font(Materialize dependency) -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<!-- Materialize styles -->
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css">
+
+	<!-- Previous Mobilise styling inherited -->
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+
+	<!-- Custom styling for tracker module -->
+	<link type="text/css" rel="stylesheet" href="css/trackerStyle.css">
+</head>
+<body>
+	
+	<div class="main">
+
+		<div id="tracker-component" class="flex-start">
+
+			<!-- Header -->
+			<header>
+				<div class="menu-container" onclick="toggleMenu(this)">
+					<div class="bar1"></div>
+					<div class="bar2"></div>
+					<div class="bar3"></div>
+				</div>
+				<img src="img/gear/logo.png"/>
+			</header>
+
+			<!-- Map -->
+			<div class="tracker-map-wrapper">
+				<div class="tracker-map">
+					<div id="map-canvas" class="d-none"></div>
+				</div>
+				<!-- <div id="map-nav-wrapper">
+					<div class="tracker-map-location-wrapper input-field clear-margin">
+						<div class="tracker-map-location-search-wrapper flex-start">
+							<i class="material-icons font-2em go-relative darkBlue-text" style="top: 5px;">location_on</i>
+							<input id="tracker-map-location-search" type="search" autocomplete="off" placeholder="Navigate to Place on Map">
+						</div>
+					</div>
+				</div> -->
+			</div>
+			
+			<!-- Tracker Components -->
+			<div id="tracker-wrap" class="tracker-options-wrapper">
+
+				<!-- Title Bar -->
+				<div class="title-bar z-depth-2 text-transform-capitalize">
+					tour des fjords
+				</div>
+				
+				<!-- Tabs -->
+				<div class="row">
+					<div class="gridTabs-navBar col s12">
+						<ul id="tracker-tabs" class="tabs tabs-fixed-width gridTabs">
+							<li class="tab gridTab"><a class="active clear-padding" href="#tracker-op-1">map</a></li>
+							<li class="tab gridTab d-none"><a class="clear-padding" href="#tracker-op-2">track</a></li>
+							<li class="tab gridTab d-none"><a class="clear-padding" href="#tracker-op-3">rostering</a></li>
+							<li class="tab gridTab d-none"><a class="clear-padding" href="#tracker-op-4">signsplan</a></li>
+							<li class="tab gridTab d-none"><a class="clear-padding" href="#tracker-op-5">bannerplan</a></li>
+						</ul>
+					</div>
+					
+					<div id="tracker-operations" class="tabs-content-wrapper">
+						<!-- Tab 1: Map -->
+						<div id="tracker-op-1" class="col s12">
+							<!-- Add/Edit Map -->
+							<div id="tracker-add-map-wrapper" class="white__box z-depth-2 d-none">
+								<div class="header grey-text">
+									<span id="map-header-title"><span id="map-header-title-face">Add</span> Map</span>
+									<i id="map-delete-btn" class="material-icons put-pointer no-select hover-grey d-none">delete</i>
+									<i id="close-addMap-btn" class="material-icons small put-pointer no-select hover-grey">close</i>
+								</div>
+								<div class="tracker-map-title-wrapper input-field top-margin-10x">
+									<input id="map-title" type="text" class="validate" maxlength="60">
+									<label for="map-title">Map Name</label>
+								</div>
+								<div class="tracker-map-location-wrapper input-field clear-margin">
+									<div class="tracker-map-location-search-wrapper flex-start">
+										<i class="material-icons font-2em go-relative set-top-10x darkBlue-text">location_on</i>
+										<input id="tracker-map-location-search" type="search" autocomplete="off" placeholder="Navigate to Place on Map">
+									</div>
+								</div>	
+								<div class="tracker-map-lock-wrapper">
+									<div class="switch__container bottom-margin-15x top-margin-10x">
+										<span class="text__wrap">Lock Position</span>
+										<span class="switch">
+											<label>
+												<input id="tracker-map-lock-position" type="checkbox">
+												<span class="lever"></span>
+											</label>
+										</span>
+									</div>
+								</div>
+								<div class="tracker-map-add-wrapper top-margin-10x flex-end">
+									<button id="map-add" class="waves-effect waves-light btn clear-margin unset-text bg-prismBlue tracker-btn" disabled><span>Save</span></button>
+								</div>
+							</div>
+							<!-- Available Maps -->
+							<div id="tracker-all-map-wrapper" class="white__box z-depth-2">
+								<div class="header grey-text">Available Maps<!-- <i id="add-map-btn" class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add map">add_box</i> --></div>
+								<div id="tracker-noMaps-label" class="grey-text d-none">No maps available</div>
+								<ul id="tracker-map-list" class="d-none"></ul>
+							</div>
+							<!-- Available Layers -->
+							<div id="tracker-layers-wrapper" class="white__box z-depth-2 d-none">
+								<div class="header grey-text">Available Layers</div>
+								<div id="tracker-noLayers-label" class="d-none">No layers available</div>
+								<ul id="tracker-layer-list"></ul>
+							</div>
+							<!-- <div>
+								<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+							</div> -->
+							<div class="fixed__buttons--container fix-position">
+								<a id="add-map-btn" class="btn-floating btn-large waves-effect waves-light bg-prismBlue"><i class="material-icons float-icon user-bg">add</i></a>
+							</div>
+
+						</div>
+
+						<!-- Tab 2: Track -->
+						<div id="tracker-op-2" class="col s12 d-none">
+							<div id="add-checkpoint-box" class="white__box z-depth-2">
+								<div id="add-cp-header" class="header grey-text">Add a new checkpoint<i id="add-cp-btn" class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add new checkpoint">add_box</i><i id="tracker-cp-loc" class="material-icons" data-position="bottom" data-delay="50">location_searching</i><i id="close-addCp-btn" class="material-icons small put-pointer no-select hover-grey d-none">close</i></div>
+								<div id="add-checkpoint-wrapper" class="d-none">
+									<div class="tracker-cp-title-wrapper input-field top-margin-25x">
+										<input id="cp-title" type="text" class="validate" maxlength="60" placeholder="">
+										<label for="cp-title">Checkpoint Name</label>
+										<!-- <div id="cp-title-error" class="validate-error go-relative pull-top-20x d-none"></div> -->
+									</div>
+									<div class="tracker-cp-type-wrapper input-field top-margin-25x">
+										<select id="cp-type"></select>
+										<label>Checkpoint Type</label>
+									</div>
+									<div class="tracker-cp-add-wrapper top-margin-10x flex-end">
+										<button id="cp-add" class="waves-effect waves-light btn clear-margin unset-text bg-prismBlue tracker-btn" disabled><span>Save</span></button>
+									</div>
+								</div>
+							</div>
+							<div id="route-box-wrapper" style="margin: 20px 10px 0 10px; display: flex; justify-content: space-between;">
+								<a class="waves-effect waves-light btn" style="background: #00b1ea;">Add Route</a>
+								<a class="waves-effect waves-light btn red" style="background: #00b1ea;">Delete Route</a>
+							</div>
+							<!-- margin-top: 20px; margin-left: 10px;  -->
+							<div id="tracker-checkpoint-wrapper" class="side-margin-10x">
+								<div class="checkpoints-title">Checkpoints (<span id="checkpoints-tally">0</span>)</div>
+								<div id="tracker-noCheckpoint-label" class="d-none">No checkpoints available</div>
+								<ul id="tracker-checkpoint-list"></ul>							
+							</div>
+						</div>
+
+						<!-- Tab 3: Rostering -->
+						<div id="tracker-op-3" class="col s12 d-none">
+							<div class="white__box z-depth-2 roster-time-container">
+								<div class="roster-schedule-wrapper row">
+									<div class="roster-start col s12 m12 l6 xl6">
+										<div class="roster-date-wrapper">
+											<div class="grey-text">Start Date:</div>
+											<div class="dummy-line width-full"></div>
+										</div>
+										<div class="roster-time-wrapper">
+											<div class="grey-text">Time:</div>
+											<div class="dummy-line width-full"></div>
+										</div>									
+									</div>
+									<div class="roster-stop col s12 m12 l6 xl6">
+										<div class="roster-date-wrapper">
+											<div class="grey-text">End Date:</div>
+											<div class="dummy-line width-full"></div>
+										</div>
+										<div class="roster-time-wrapper">
+											<div class="grey-text">Time:</div>
+											<div class="dummy-line width-full"></div>
+										</div>	
+									</div>
+								</div>
+								<div></div>
+							</div>
+							<div class="white__box z-depth-2">
+								<div class="filter-personnel-wrapper">
+									<div class="filter-personnel-title grey-text">Filter Personell by Category/Section/Role</div>
+									<div class="dummy-line"></div>	
+								</div>
+							</div>
+							<div id="roster-tabs" class="row top-margin-10x">
+								<div class="gridTabs-navBar">
+									<ul class="tabs tabs-fixed-width gridTabs">
+										<li class="tab gridTab"><a class="active clear-padding" href="#course-roster-wrapper">Course (<span id="course-roster-count">23</span>)</a></li>
+										<li class="tab gridTab"><a class="clear-padding" href="#fixed-roster-wrapper">Fixed (<span id="fixed-roster-count">12</span>)</a></li>
+										<li class="tab gridTab"><a class="clear-padding" href="#mobile-roster-wrapper">Mobile (<span id="mobile-roster-count">4</span>)</a></li>
+									</ul>
+								</div>
+
+								<div class="tabs-content-wrapper">
+									<div id="course-roster-wrapper" class="col s12">
+										<div class="personnel-list side-margin-10x">
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>								
+										</div>	
+									</div>
+
+									<div id="fixed-roster-wrapper" class="col s12">
+										<div class="personnel-list side-margin-10x">
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>							
+										</div>	
+									</div>
+
+									<div id="mobile-roster-wrapper" class="col s12">
+										<div class="personnel-list side-margin-10x">
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>
+											<div class="personnel-box">
+												<div class="personnel-icon">
+													<img class="personnel-tag" src="img/gear/reporter.jpg">
+												</div>
+												<div class="personnel-info-wrapper">
+													<div class="personnel-name">Ola Nordmann</div>
+													<div class="personnel-details">
+														Section/Role | +4792858015 | richard@mobilise.no |
+													</div>
+												</div>
+											</div>								
+										</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Tab 4: Signsplan -->
+						<div id="tracker-op-4" class="col s12 d-none">
+							<div id="add-checkpoint-box" class="white__box z-depth-2">
+								<div id="add-cp-header" class="header grey-text">Add a new checkpoint<i id="add-cp-btn" class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add new checkpoint">add_box</i><i id="tracker-cp-loc" class="material-icons" data-position="bottom" data-delay="50">location_searching</i><i id="close-addCp-btn" class="material-icons small put-pointer no-select hover-grey d-none">close</i></div>
+								<div id="add-checkpoint-wrapper" class="d-none">
+									<div class="tracker-cp-title-wrapper input-field top-margin-25x">
+										<input id="cp-title" type="text" class="validate" maxlength="60" placeholder="">
+										<label for="cp-title">Checkpoint Name</label>
+										<!-- <div id="cp-title-error" class="validate-error go-relative pull-top-20x d-none"></div> -->
+									</div>
+									<div class="tracker-cp-type-wrapper input-field top-margin-25x">
+										<select id="cp-type"></select>
+										<label>Checkpoint Type</label>
+									</div>
+									<div class="tracker-cp-add-wrapper top-margin-10x flex-end">
+										<button id="cp-add" class="waves-effect waves-light btn clear-margin unset-text bg-prismBlue tracker-btn" disabled><span>Save</span></button>
+									</div>
+								</div>
+							</div>
+							<div class="white__box z-depth-2">
+								<div class="search-signs-wrapper">
+									<div class="search-signs-title header grey-text">Search for Signs:<i class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add Sign">add_box</i></div>
+									<div class="dummy-line"></div>	
+								</div>
+							</div>
+							<div class="tracker-signs-wrapper side-margin-10x">
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (1).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (2).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (3).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (4).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (5).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (6).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (7).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (8).png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-sign-icon" src="img/signs/sign (9).png">
+								</div>
+							</div>
+							<div class="fixed__buttons--container fix-position">
+								<a class="btn-floating btn-large waves-effect waves-light bg-prismBlue"><i class="material-icons float-icon user-bg">add</i></a>
+							</div>
+						</div>
+
+						<!-- Tab 5: Bannerplan -->
+						<div id="tracker-op-5" class="col s12 d-none">
+							<div id="add-checkpoint-box" class="white__box z-depth-2">
+								<div id="add-cp-header" class="header grey-text">Add a new checkpoint<i id="add-cp-btn" class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add new checkpoint">add_box</i><i id="tracker-cp-loc" class="material-icons" data-position="bottom" data-delay="50">location_searching</i><i id="close-addCp-btn" class="material-icons small put-pointer no-select hover-grey d-none">close</i></div>
+								<div id="add-checkpoint-wrapper" class="d-none">
+									<div class="tracker-cp-title-wrapper input-field top-margin-25x">
+										<input id="cp-title" type="text" class="validate" maxlength="60" placeholder="">
+										<label for="cp-title">Checkpoint Name</label>
+										<!-- <div id="cp-title-error" class="validate-error go-relative pull-top-20x d-none"></div> -->
+									</div>
+									<div class="tracker-cp-type-wrapper input-field top-margin-25x">
+										<select id="cp-type"></select>
+										<label>Checkpoint Type</label>
+									</div>
+									<div class="tracker-cp-add-wrapper top-margin-10x flex-end">
+										<button id="cp-add" class="waves-effect waves-light btn clear-margin unset-text bg-prismBlue tracker-btn" disabled><span>Save</span></button>
+									</div>
+								</div>
+							</div>
+							<div class="white__box z-depth-2">
+								<div class="search-banners-wrapper">
+									<div class="search-banners-title header grey-text">Search for Banners:<i class="material-icons tooltipped small green-text put-pointer no-select" data-position="bottom" data-delay="50" data-tooltip="Add Banner">add_box</i></div>
+									<div class="dummy-line"></div>	
+								</div>
+							</div>
+							<div class="tracker-banners-wrapper side-margin-10x">
+								<div class="tracker-banner">
+									<img class="tracker-banner-icon" src="img/banners/equinor.png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-banner-icon" src="img/banners/hakull.jpg">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-banner-icon" src="img/banners/klarna.png">
+								</div>
+								<div class="tracker-sign">
+									<img class="tracker-banner-icon" src="img/banners/spectrum.jpg">
+								</div>
+							</div>
+							<div class="fixed__buttons--container fix-position">
+								<a class="btn-floating btn-large waves-effect waves-light bg-prismBlue"><i class="material-icons float-icon user-bg">add</i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Jquery script -->
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>	
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<!-- Google Maps API -->
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLPnqaK_4nJPiLNqHQSepypZpIkHZXKww&libraries=places"></script>
+
+	<!-- Materialize script -->
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+
+	<!-- Create custom HTML markers on Google Maps script by Dan Ward - warlyware(Github) -->	
+	<script type="text/javascript" src="js/html-map-marker.js"></script>
+
+	<!-- Tracker script -->
+	<script type="text/javascript" src="js/tracker-script.js"></script>
+
+</body>
+</html>
