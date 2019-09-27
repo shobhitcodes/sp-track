@@ -29,7 +29,7 @@
 	margin-top: 0;
 	padding: 0;
 	line-height: initial;
-	position: initial;
+	/*position: initial;*/
 }
 
 #tracker-component {
@@ -189,6 +189,7 @@ a[href^="https://maps.google.com/maps"] {
 
 	.tracker-map {
 		margin-top: 50px;
+		height: initial;
 	}
 
 	#map-canvas {
@@ -211,6 +212,12 @@ a[href^="https://maps.google.com/maps"] {
 	right: 30px;
 	font-size: 27px;
 	line-height: 32px;
+}
+
+.btn-float-wrap {
+	position: fixed;
+	right: 17px;
+	bottom: 40px;
 }
 /***Icon/Button styles --end***/
 
@@ -429,7 +436,7 @@ a[href^="https://maps.google.com/maps"] {
 	left: 90px;
 }
 
-#tracker-map-location-search {
+/*#tracker-map-location-search {
 	width: 90%;
 	height: 35px;
-}
+}*/
