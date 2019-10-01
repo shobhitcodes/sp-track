@@ -10,6 +10,7 @@ let defaultMapOptions = {
 	disableDoubleClickZoom: true,
 	draggable: true
 };
+let DOMEle = {};
 let layerIdBegin = 101;
 let layersName = ["Personell", "Signsplan", "Bannerplan"];
 let newMarkerFlag = false;
@@ -32,7 +33,7 @@ const getUID = () => Math.random().toFixed(10).toString(36).substr(2, 16);
 
 //Checks if local storage exists in broswer
 const checkLocalStorage = () => {
-	var check = 'localTest';
+	let check = 'localTest';
 	try {
 		localStorage.setItem(check, check);
 		localStorage.removeItem(check);
@@ -136,7 +137,7 @@ const initMaterialize = () => {
 };
 
 //To initialize tabs for passed element
-const initTabs = (ele,swipe) => swipe ? ele.tabs({swipeable: true, onShow: tab => onTabChange(tab)}) : ele.tabs();
+const initTabs = (ele, swipe) => swipe ? ele.tabs({swipeable: true, onShow: tab => onTabChange(tab)}) : ele.tabs();
 
 //To initialize tooltip for passed element
 const initTooltip = ele => ele.tooltip();
@@ -153,10 +154,10 @@ const onTabChange = tab => {
 	}
 };
 
-//Materialize Component Methods --end
+//Materialize component methods --end
 
 
-//Google map Service Methods --start
+//Google map service methods --start
 
 //Initializes and displays google map 
 const initGoogleMap = () => {
@@ -171,6 +172,8 @@ const initGoogleMap = () => {
 			draggable: activeMap.draggable
 		});
 		$("#map-canvas").removeClass("d-none");
+	} else {
+		$("#map-canvas").addClass("d-none");
 	}
 };
 
@@ -251,12 +254,11 @@ const setMap = () => {
 	if(map) {
 		mapList.empty();
 		$("#tracker-noMaps-label").addClass("d-none");
-		map.forEach( item => {
-			mapList.append(addMapItem(item.id, item.name, item.active));
-		});
+		map.forEach( item => mapList.append(addMapItem(item.id, item.name, item.active)));
 		mapList.removeClass("d-none");
 		$("li.tracker-map-item").find('.tracker-map-name[data-active="1"]').parent().find("input.tracker-map-status").prop("checked", true);
 	} else {
+		mapList.addClass("d-none");
 		$("#tracker-noMaps-label").removeClass("d-none");
 	}
 };
@@ -311,9 +313,7 @@ const setLayer = () => {
 	if(activeMap !== undefined) {
 		let layerList = $("#tracker-layer-list");
 		layerList.empty();
-		activeMap.layer.forEach( layer => {
-			layerList.append(addLayerItem(layer.id, getLayerName(layer.id), layer.active));
-		});
+		activeMap.layer.forEach( layer => layerList.append(addLayerItem(layer.id, getLayerName(layer.id), layer.active)));
 		$("li.tracker-layer-item").find('.tracker-layer-name[data-active="1"]').parent().find("input.tracker-layer-status").prop("checked", true);
 		$("#tracker-layers-wrapper").removeClass("d-none");
 	} else {
@@ -324,12 +324,11 @@ const setLayer = () => {
 //Sets initial layer set
 const setInitialLayer = () => {
 	let layers = [];
-	layersName.forEach((value, index) => {
+	layersName.forEach((value, index) => 
 		layers.push({
 			"id" : layerIdBegin + index,
 			"active" : 1
-		});
-	});
+		}));	
 	window.initialLayer = layers;
 };
 
@@ -383,7 +382,7 @@ const getActiveLayers = () => {
 	let activeLayers = [];
 	let activeMap = getActiveMap();
 	if(activeMap !== undefined) {
-		activeMap.layer.filter(item => item.active === 1).forEach(item => activeLayers.push(item.id));
+		activeMap.layer.filter( item => item.active === 1).forEach( item => activeLayers.push(item.id));
 	}
 	return activeLayers;
 }
@@ -399,7 +398,7 @@ const setCheckpoint = () => {
 	if(activeMap !== undefined) {
 		let cpList = $("#tracker-checkpoint-list");
 		cpList.empty();
-		if(checkpoint){
+		if(checkpoint) {
 			checkpoint.forEach( item => {
 				if(item.map === getActiveMap().id && getActiveLayers().includes(item.type)) {
 					cpList.append(addCheckpointItem(item.id, item.name, item.position));
@@ -407,6 +406,7 @@ const setCheckpoint = () => {
 			});
 		}
 	}
+	// setMarkers();
 	setCheckpointTally();
 	showNoCheckpointCheck();
 };
@@ -509,7 +509,7 @@ $(document).ready(() => {
 	activatePlaceAutocomplete();
 	setLayer();
 	setCheckpoint();
-	fetchCheckpoints();
+	// fetchCheckpoints();
 
 	//Event Handlers on Tab 1(Map) --start
 
@@ -549,7 +549,7 @@ $(document).ready(() => {
 		mapEditFlag = true;
 		let activeMap = getActiveMap();
 		$("#tracker-all-map-wrapper, #tracker-layers-wrapper").addClass("d-none");
-		$("#map-header-title-face").text("Edit");
+		$("#map-action").text("Edit");
 		$("#map-title").val(activeMap.name);
 		M.updateTextFields();
 		$("#map-add").prop("disabled", false);
@@ -563,7 +563,7 @@ $(document).ready(() => {
 		$("#tracker-add-map-wrapper").addClass("d-none");
 		$("#tracker-all-map-wrapper").removeClass("d-none");
 		if(mapEditFlag) {
-			$("#map-header-title-face").text("Add");
+			$("#map-action").text("Add");
 			$("#map-title").val("");
 			$("#map-title").blur();
 			$("#map-add").prop("disabled", true);
@@ -585,7 +585,7 @@ $(document).ready(() => {
 		$("#tracker-add-map-wrapper").addClass("d-none");
 		$("#tracker-all-map-wrapper").removeClass("d-none");
 		if(mapEditFlag) {
-			$("#map-header-title-face").text("Add");
+			$("#map-action").text("Add");
 			$("#map-title").val("");
 			$("#map-title").blur();
 			$("#map-add").prop("disabled", true);
